@@ -8,7 +8,7 @@ Pertanyaan:
 1. Sebutkan library apa saja yang dipakai, website library itu dimana, dan dokumentasi library itu ada dimana.    
 2. Aplikasi itu 'laggy'. Kenapa? Bagaimana cara membuat animasi lebih 'smooth'?    
 3. Aplikasi itu tidak akan jalan di salah satu 3 browser populer (Chrome, Firefox, Internet Explorer)? Kenapa? Solusinya hanya menghapus satu character di code, character yang mana?    
-3. Implementasikan tombol Start, Stop, Pause, dan Resume.   
-4. Ketika ukuran window dirubah, susunan huruf yang 'terbentur' batas window menjadi tidak 1 baris. Benarkan.    
-5. Implementasikan sistem score.   
-6. Implementasikan hukuman berupa pengurangan nilai bila salah ketik.
+4. Implementasikan tombol Start, Stop, Pause, dan Resume.   
+5. Ketika ukuran window dirubah, susunan huruf yang 'terbentur' batas window menjadi tidak 1 baris. Benarkan.    
+6. Implementasikan sistem score.   
+7. Implementasikan hukuman berupa pengurangan nilai bila salah ketik.

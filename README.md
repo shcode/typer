@@ -12,3 +12,11 @@ Pertanyaan:
 5. Ketika ukuran window dirubah, susunan huruf yang 'terbentur' batas window menjadi tidak 1 baris. Benarkan.    
 6. Implementasikan sistem score.   
 7. Implementasikan hukuman berupa pengurangan nilai bila salah ketik.
+
+Jawaban: 
+1. Library yang dipakai:
+   - jQuery: http://jquery.com - Documentation: https://api.jquery.com
+   - jQuery UI: http://jqueryui.com - Documentation: https://api.jqueryui.com
+   - Underscore.js, Website + Documentation: http://underscorejs.org
+   - Backbone.js, Website + Documentation: http://backbonejs.org
+   - Bootstrap, Website + Documentation: http://getbootstrap.com

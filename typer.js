@@ -1,6 +1,6 @@
 var Word = Backbone.Model.extend({
 	move: function() {
-		this.set({y:this.get('y') + this.get('speed')});
+		this.set({y:this.get('y') + (this.get('speed')/5)});
 	}
 });
 
@@ -149,7 +149,7 @@ var Typer = Backbone.Model.extend({
 	},
 
 	start: function() {
-		var animation_delay = 100;
+		var animation_delay = 10;
 		var self = this;
 		setInterval(function() {
 			self.iterate();

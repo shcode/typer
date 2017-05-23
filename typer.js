@@ -77,6 +77,7 @@ var TyperView = Backbone.View.extend({
 				'margin-bottom':'10px',
 				'z-index':'1000'
 			}).keyup(function() {
+				debugger;
 				var words = self.model.get('words');
 				for(var i = 0;i < words.length;i++) {
 					var word = words.at(i);
@@ -93,6 +94,66 @@ var TyperView = Backbone.View.extend({
 				}
 			});
 		
+		text_input.attr('disabled', 'disabled');
+		
+		var button_wrapper = $('<div>')
+			.css({
+				position: 'absolute',
+				bottom: 0,
+				'margin-bottom': '10px',
+				'margin-left': '10px',
+			});
+
+		var start_button = $('<button>')
+			.addClass('start-button')
+			.on('click', function(){
+				if ($(this).text() == "Start") {
+					self.model.start();
+					pause_button.removeAttr('disabled');
+					text_input.removeAttr('disabled').focus();
+					$(this).removeClass('btn-success');
+					$(this).addClass('btn-danger');
+					$(this).text('Stop');
+				} else {
+					self.model.stop();
+					pause_button.attr('disabled', 'disabled');
+					text_input.attr('disabled', 'disabled');
+					$(this).removeClass('btn-danger');
+					$(this).addClass('btn-success');
+					$(this).text('Start');
+				}
+			});
+
+		start_button.addClass('btn btn-success')
+			.text('Start');
+
+		var pause_button = $('<button>')
+			.addClass('pause-button')
+			.css({
+				'margin-left': '10px'
+			})
+			.on('click', function(){
+				if ($(this).text() == "Pause") {
+					self.model.pause();
+					start_button.attr('disabled', 'disabled');
+					text_input.attr('disabled', 'disabled');
+					$(this).removeClass('btn-warning');
+					$(this).addClass('btn-primary');
+					$(this).text('Resume');
+				} else {
+					self.model.start();
+					start_button.removeAttr('disabled');
+					text_input.removeAttr('disabled').focus();
+					$(this).removeClass('btn-primary');
+					$(this).addClass('btn-warning');
+					$(this).text('Pause');
+				}
+			});
+		
+		pause_button.addClass('btn btn-warning')
+			.text('Pause')
+			.attr('disabled', 'disabled');
+
 		$(this.el)
 			.append(wrapper
 				.append($('<form>')
@@ -102,6 +163,10 @@ var TyperView = Backbone.View.extend({
 					.submit(function() {
 						return false;
 					})
+					.append(button_wrapper
+						.append(start_button)
+						.append(pause_button)						
+					)
 					.append(text_input)));
 		
 		text_input.css({left:((wrapper.width() - text_input.width()) / 2) + 'px'});
@@ -129,7 +194,7 @@ var TyperView = Backbone.View.extend({
 				word.get('view').render();
 			}
 		}
-	}
+	},
 });
 
 var Typer = Backbone.Model.extend({
@@ -142,6 +207,7 @@ var Typer = Backbone.Model.extend({
 	},
 	
 	initialize: function() {
+		var interval;
 		new TyperView({
 			model: this,
 			el: $(document.body)
@@ -151,9 +217,22 @@ var Typer = Backbone.Model.extend({
 	start: function() {
 		var animation_delay = 10;
 		var self = this;
-		setInterval(function() {
+		interval = setInterval(function() {
 			self.iterate();
 		},animation_delay);
+	},
+
+	stop: function() {
+		this.pause();
+		var words = this.get('words');
+
+		while(first = words.first()) {
+			first.destroy();
+		}		
+	},
+
+	pause: function() {
+		clearInterval(interval);
 	},
 	
 	iterate: function() {

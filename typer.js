@@ -286,6 +286,16 @@ var Typer = Backbone.Model.extend({
 			words.remove(words_to_be_removed[i]);
 		}
 		
+		$(window).on('resize', function(){
+			for(var i = 0;i < words.length;i++) {
+				var word = words.at(i);
+				var word_width = word.get('string').length * 25;
+				if (word.get('x') + word_width > $(window).width()){
+					word.set({x: $(window).width() - word_width});
+				}
+			}
+		});
+
 		this.trigger('change');
 	},
 	

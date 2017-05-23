@@ -31,3 +31,4 @@ Jawaban:
 | Paused    | Disabled  | Change to Resume | Disabled |
 | Resumed   | Enabled   | Change to Pause  | Enabled |
 | Stop      | Change to Start | Disabled | Disabled |
+5. Untuk membetulkan ini, dihitung dulu lebar kata (dalam pixel) dan posisi kata (word.get(x)). Jika melebihi dari lebar window, maka digeser.

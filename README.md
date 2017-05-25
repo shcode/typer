@@ -33,3 +33,4 @@ Jawaban:
 | Stop      | Change to Start | Disabled | Disabled |
 5. Untuk membetulkan ini, dihitung dulu lebar kata (dalam pixel) dan posisi kata (word.get(x)). Jika melebihi dari lebar window, maka digeser.
 6. Score ditambahkan sesuai panjang karakter pada kata yang berhasil diselesaikan.
+7. Score akan dikurangi 1 jika salah tulis.

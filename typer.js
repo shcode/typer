@@ -78,6 +78,8 @@ var TyperView = Backbone.View.extend({
 				'z-index':'1000'
 			}).keyup(function() {
 				var words = self.model.get('words');
+				var to_be_deducted = false;
+				var cancel_deduction = false;
 				for(var i = 0;i < words.length;i++) {
 					var word = words.at(i);
 					var typed_string = $(this).val();
@@ -88,9 +90,17 @@ var TyperView = Backbone.View.extend({
 							self.model.defaults.score += string.length;
 							$(this).val('');
 						}
+						cancel_deduction = true;
 					} else {
+						if (word.get('highlight') !== 0 || word.get('highlight') !== undefined) {
+							to_be_deducted = true;
+						}
 						word.set({highlight:0});
 					}
+				}
+
+				if (!cancel_deduction && to_be_deducted) {
+					self.model.defaults.score -= 1;
 				}
 			});
 		

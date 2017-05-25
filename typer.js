@@ -77,7 +77,6 @@ var TyperView = Backbone.View.extend({
 				'margin-bottom':'10px',
 				'z-index':'1000'
 			}).keyup(function() {
-				debugger;
 				var words = self.model.get('words');
 				for(var i = 0;i < words.length;i++) {
 					var word = words.at(i);
@@ -86,6 +85,7 @@ var TyperView = Backbone.View.extend({
 					if(string.toLowerCase().indexOf(typed_string.toLowerCase()) == 0) {
 						word.set({highlight:typed_string.length});
 						if(typed_string.length == string.length) {
+							self.model.defaults.score += string.length;
 							$(this).val('');
 						}
 					} else {
@@ -109,6 +109,7 @@ var TyperView = Backbone.View.extend({
 			.on('click', function(){
 				if ($(this).text() == "Start") {
 					self.model.start();
+					self.model.defaults.score = 0;
 					pause_button.removeAttr('disabled');
 					text_input.removeAttr('disabled').focus();
 					$(this).removeClass('btn-success');
@@ -154,6 +155,20 @@ var TyperView = Backbone.View.extend({
 			.text('Pause')
 			.attr('disabled', 'disabled');
 
+		var score_label = $('<div id="score">')
+			.css({
+				position: 'absolute',
+				bottom: 0,
+				right: 0,
+				'margin-bottom': '10px',
+				'margin-right': '10px',
+				border: '1px solid',
+				'backgroud-color': 'white',
+				'text-align': 'center',
+				'width': '50px',
+				'font-size': '24px'
+			});
+
 		$(this.el)
 			.append(wrapper
 				.append($('<form>')
@@ -167,10 +182,13 @@ var TyperView = Backbone.View.extend({
 						.append(start_button)
 						.append(pause_button)						
 					)
-					.append(text_input)));
+					.append(text_input)
+					.append(score_label)));
 		
 		text_input.css({left:((wrapper.width() - text_input.width()) / 2) + 'px'});
 		text_input.focus();
+
+		score_label.text(self.model.defaults.score);
 		
 		this.listenTo(this.model, 'change', this.render);
 	},
@@ -178,6 +196,8 @@ var TyperView = Backbone.View.extend({
 	render: function() {
 		var model = this.model;
 		var words = model.get('words');
+
+		$('#score').text(model.defaults.score);
 		
 		for(var i = 0;i < words.length;i++) {
 			var word = words.at(i);
@@ -203,7 +223,8 @@ var Typer = Backbone.Model.extend({
 		min_distance_between_words:50,
 		words:new Words(),
 		min_speed:1,
-		max_speed:5
+		max_speed:5,
+		score: 0
 	},
 	
 	initialize: function() {
